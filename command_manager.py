@@ -12,4 +12,4 @@ class CommandManager(object):
     def pop_command(self):
         if len(self.command_queue) > 0:
             return {"result": "SUCCESS", "command": self.command_queue.pop(0)}
-        return {"result": "FAILURE", "message": "Command queue empty."}
+        return {"result": "SUCCESS", "command": ""}
