@@ -3,9 +3,11 @@
 from flask import Flask
 from flask import request
 from command_manager import CommandManager
+from json_formatter import JsonFormatter
 
 app = Flask(__name__)
 server = CommandManager()
+json = JsonFormatter(indent=4)
 
 
 @app.route('/')
@@ -16,9 +18,11 @@ def hello_world():
 @app.route('/add_command', methods=['POST'])
 def append_command():
     command = request.form["command"]
-    return server.append_command(command)
+    result = server.append_command(command)
+    return json.dumps(result)
 
 
 @app.route('/get_last_command', methods=['GET'])
 def get_command():
-    return server.pop_command()
+    result = server.pop_command()
+    return json.dumps(result)
