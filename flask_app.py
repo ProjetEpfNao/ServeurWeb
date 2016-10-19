@@ -50,7 +50,7 @@ json = JsonFormatter(indent=4)
 
 @app.route('/')
 def hello_world():
-    return 'Hello from Flask!'
+    return str(server.command_queue)
 
 
 @app.route('/add_command', methods=['POST'])

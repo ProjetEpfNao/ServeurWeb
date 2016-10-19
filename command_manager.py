@@ -7,7 +7,7 @@ class CommandManager(object):
 
     def append_command(self, command):
         self.command_queue.append(command)
-        return {"result": "OK"}
+        return {"result": "SUCCESS"}
 
     def pop_command(self):
         if len(self.command_queue) > 0:
