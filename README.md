@@ -2,19 +2,19 @@
 
 ## Deployed 
 
-Add command
-POST /add_command command=COMMAND_NAME
+Add command  
+POST /add_command command=COMMAND_NAME  
 
-Get last command
-GET /get_last_command
+Get last command  
+GET /get_last_command  
 
 ## Not deployed
 
-Register new user
-POST /register username=USERNAME&password=PASSWORD
+Register new user  
+POST /register username=USERNAME&password=PASSWORD  
 
-Login
-POST /login username=USERNAME&password=PASSWORD
+Login  
+POST /login username=USERNAME&password=PASSWORD  
 
 # TODO
 
