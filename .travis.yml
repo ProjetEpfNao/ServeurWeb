@@ -1,4 +1,8 @@
 language: python
 python: 3.5
-install: pip install flask
+install:
+    - pip install flask
+    - pip install flask_sqlalchemy
+env:
+    - FLASK_ENV=TEST
 script: python -m unittest discover

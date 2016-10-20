@@ -22,7 +22,7 @@ POST /login username=USERNAME&password=PASSWORD
 
 1. ~~Add set command url~~
 2. ~~Add get command url~~
-3. Set up CI scripts for db and env vars
+3. ~~Set up CI scripts for db and env vars~~
 4. ~~Write unit tests~~
 5. ~~Clean up hardcoded values~~
 
