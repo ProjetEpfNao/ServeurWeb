@@ -30,7 +30,7 @@ POST /login username=USERNAME&password=PASSWORD
 8. Add robot credentials generator url
 9. Set up CI scripts for db and env vars
 10. Write unit tests
-11. Clean up hardcoded values
+11. ~~Clean up hardcoded values~~
 12. Fuse the two managers into user_manager: 1 command queue per session
 
 ## Sprint 2

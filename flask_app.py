@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from command_manager import CommandManager
 from json_formatter import JsonFormatter
 from user_manager import UserManager
+import rest_api
 import models.user
 import config
 import os
@@ -53,33 +54,33 @@ def hello_world():
     return str(server.command_queue)
 
 
-@app.route('/add_command', methods=['POST'])
+@app.route(rest_api.ADD_COMMAND_EXT, methods=['POST'])
 def append_command():
-    command = request.form["command"]
+    command = request.form[rest_api.COMMAND_KEY]
     result = server.append_command(command)
     return json.dumps(result)
 
 
-@app.route('/get_last_command', methods=['GET'])
+@app.route(rest_api.GET_LAST_COMMAND_EXT, methods=['GET'])
 def get_command():
     result = server.pop_command()
     return json.dumps(result)
 
 
-@app.route('/register', methods=['POST'])
+@app.route(rest_api.REGISTER_EXT, methods=['POST'])
 def register():
-    result = users.add_user(request.form["username"], request.form["password"])
+    result = users.add_user(request.form[rest_api.USERNAME_KEY], request.form[rest_api.PASSWORD_KEY])
     return json.dumps(result)
 
 
-@app.route('/login', methods=['POST'])
+@app.route(rest_api.LOGIN_EXT, methods=['POST'])
 def login():
-    username, password = request.form["username"], request.form["password"]
+    username, password = request.form[rest_api.USERNAME_KEY], request.form[rest_api.PASSWORD_KEY]
     result = users.get_user(username, password)
     if result:
-        resp = make_response(json.dumps({"result": "SUCCESS"}))
+        resp = make_response(json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS}))
         session_id = str(uuid.uuid4())
         users.set_user_session(username, session_id)
-        session['session-id'] = session_id
+        session[rest_api.COOKIE_KEY] = session_id
         return resp
-    return json.dumps({"result": "FAILURE"})
+    return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_FAILURE})

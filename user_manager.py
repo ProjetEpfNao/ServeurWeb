@@ -15,4 +15,3 @@ class UserManager(object):
 
     def set_user_session(self, username, session_id):
         self.sessions[session_id] = username
-
