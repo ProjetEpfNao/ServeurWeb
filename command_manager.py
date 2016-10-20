@@ -14,3 +14,6 @@ class CommandManager(object):
         if len(self.command_queue) > 0:
             return {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS, rest_api.COMMAND_KEY: self.command_queue.pop(0)}
         return {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS, rest_api.COMMAND_KEY: ""}
+
+    def purge(self):
+        self.command_queue = []

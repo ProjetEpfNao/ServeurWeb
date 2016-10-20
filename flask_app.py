@@ -48,6 +48,11 @@ users = UserManager(db, User)
 server = CommandManager()
 json = JsonFormatter(indent=4)
 
+def clean_app():
+    server.purge()
+app.clean = clean_app
+
+
 
 @app.route('/')
 def hello_world():
