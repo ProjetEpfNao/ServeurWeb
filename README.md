@@ -22,21 +22,22 @@ POST /login username=USERNAME&password=PASSWORD
 
 1. ~~Add set command url~~
 2. ~~Add get command url~~
-3. ~~Add db~~
-4. ~~Add authentication request~~
-5. ~~Add sign-up request~~
-6. Add session check to command urls
-7. Add admin robot-user association dashboard
-8. Add robot credentials generator url
-9. Set up CI scripts for db and env vars
-10. ~~Write unit tests~~
-11. ~~Clean up hardcoded values~~
-12. Fuse the two managers into user_manager: 1 command queue per session
+3. Set up CI scripts for db and env vars
+4. ~~Write unit tests~~
+5. ~~Clean up hardcoded values~~
 
 ## Sprint 2
 
-1. Check if we need to rethink framework selection
-2. Add salted hashes, drop users
-3. Find HLS streaming module
-4. Register certificate
-5. Activate https
+
+1. ~~Add db~~
+2. ~~Add authentication request~~
+3. ~~Add sign-up request~~
+4. Add session check to command urls
+5. Add admin robot-user association dashboard
+6. Add robot credentials generator url
+7. Fuse the two managers into user_manager: 1 command queue per session
+8. Check if we need to rethink framework selection
+9. Add salted hashes, drop users
+10. Find HLS streaming module
+11. Register certificate
+12. Activate https
