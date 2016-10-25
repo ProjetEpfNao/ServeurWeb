@@ -15,7 +15,13 @@ GET /get_last_command
 
 Login (not tested)  
 POST /login username=USERNAME&password=PASSWORD  
-
+*----------------------------------------------*
+Comment l'utiliser coté android:  
+&nbsp;&nbsp;&nbsp;&nbsp;request POST standard comme les précédentes  
+&nbsp;&nbsp;&nbsp;&nbsp;récupérez le cookie renvoyé dans le header de la réponse à la requete post   
+&nbsp;&nbsp;&nbsp;&nbsp;envoyez ce cookie dans toutes les requetes futures  
+&nbsp;&nbsp;&nbsp;&nbsp;Pour faire tout ça vous pouvez regarder JavaNetCookieJar et modifier votre client okhttp pour l'incorporer.  
+*----------------------------------------------*
 
 ## Not deployed
 
@@ -48,3 +54,5 @@ POST /register username=USERNAME&password=PASSWORD
 10. Find HLS streaming module
 11. Register certificate
 12. Activate https
+13. Hash passwords
+14. Add logout route 
