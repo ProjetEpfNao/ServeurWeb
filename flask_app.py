@@ -88,4 +88,5 @@ def login():
         users.set_user_session(username, session_id)
         session[rest_api.COOKIE_KEY] = session_id
         return resp
-    return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_FAILURE})
+    return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_FAILURE,
+                       rest_api.ERROR_KEY: rest_api.INCORRECT_CREDENTIALS_ERROR})

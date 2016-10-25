@@ -4,6 +4,11 @@
 
 Add command  
 POST /add_command command=COMMAND_NAME  
+&nbsp;&nbsp;&nbsp;&nbsp;Allowed:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise_arm  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lower_arm  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stand_up  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sit_down  
 
 Get last command  
 GET /get_last_command  

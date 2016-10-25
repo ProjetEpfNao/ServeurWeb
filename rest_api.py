@@ -3,6 +3,7 @@
 STATUS_KEY = "result"
 STATUS_SUCCESS = "SUCCESS"
 STATUS_FAILURE = "FAILURE"
+ERROR_KEY = "error_message"
 
 # COMMAND CONTENT
 COMMAND_KEY = "command"
@@ -15,3 +16,7 @@ LOGIN_EXT = "/login"
 COOKIE_KEY = "session-id"
 USERNAME_KEY = "username"
 PASSWORD_KEY = "password"
+
+# ERRORS
+NO_SUCH_COMMAND_ERROR = "No such command."
+INCORRECT_CREDENTIALS_ERROR = "Incorrect credentials."
