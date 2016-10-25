@@ -13,13 +13,15 @@ POST /add_command command=COMMAND_NAME
 Get last command  
 GET /get_last_command  
 
+Login (not tested)  
+POST /login username=USERNAME&password=PASSWORD  
+
+
 ## Not deployed
 
 Register new user  
 POST /register username=USERNAME&password=PASSWORD  
 
-Login  
-POST /login username=USERNAME&password=PASSWORD  
 
 # TODO
 

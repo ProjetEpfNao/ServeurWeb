@@ -38,6 +38,7 @@ SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{username}:{password}@{hostnam
     databasename=config.db_name)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
+app.config['SECRET_KEY'] = config.secret_key
 db = SQLAlchemy(app)
 
 # INIT MODELS
@@ -48,10 +49,10 @@ users = UserManager(db, User)
 server = CommandManager()
 json = JsonFormatter(indent=4)
 
+
 def clean_app():
     server.purge()
 app.clean = clean_app
-
 
 
 @app.route('/')
@@ -74,13 +75,15 @@ def get_command():
 
 @app.route(rest_api.REGISTER_EXT, methods=['POST'])
 def register():
-    result = users.add_user(request.form[rest_api.USERNAME_KEY], request.form[rest_api.PASSWORD_KEY])
+    result = users.add_user(request.form[rest_api.USERNAME_KEY],
+                            request.form[rest_api.PASSWORD_KEY])
     return json.dumps(result)
 
 
 @app.route(rest_api.LOGIN_EXT, methods=['POST'])
 def login():
-    username, password = request.form[rest_api.USERNAME_KEY], request.form[rest_api.PASSWORD_KEY]
+    username = request.form[rest_api.USERNAME_KEY]
+    password = request.form[rest_api.PASSWORD_KEY]
     result = users.get_user(username, password)
     if result:
         resp = make_response(json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS}))

@@ -9,6 +9,7 @@ TEST_COMMAND_ALLOWED = "test_command_allowed"
 TEST_COMMAND_NOT_ALLOWED = "test_command_not_allowed"
 ENCODING = "utf8"
 
+
 class TestFlaskApp(unittest.TestCase):
 
     def decode_json(self, result):
@@ -18,7 +19,6 @@ class TestFlaskApp(unittest.TestCase):
         flask_app.app.config['TESTING'] = True
         flask_app.server.ALLOWED.append(TEST_COMMAND_ALLOWED)
         self.app = flask_app.app.test_client()
-
 
     def tearDown(self):
         flask_app.app.clean()
