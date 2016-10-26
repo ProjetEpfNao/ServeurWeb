@@ -5,7 +5,8 @@ class CommandManager(object):
     ALLOWED = ["raise_arm",
                "lower_arm",
                "stand_up",
-               "sit_down"]
+               "sit_down",
+               "look_up"]
 
     def __init__(self):
         self.command_queue = []
