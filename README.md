@@ -1,34 +1,34 @@
-# REST API
+# REST API [![Build Status](https://travis-ci.org/ProjetEpfNao/ServeurWeb.svg?branch=master)](https://travis-ci.org/ProjetEpfNao/ServeurWeb)
 
 ## Deployed 
 
 Add command  
-POST /add_command command=COMMAND_NAME  
-&nbsp;&nbsp;&nbsp;&nbsp;Allowed:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise_arm  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lower_arm  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stand_up  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sit_down  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;look_up 
+POST /add_command command=COMMAND (raise_arm || lower_arm || stand_up || sit_down || look_up)  
 
 Get last command  
 GET /get_last_command  
 
 Login (not tested)  
-POST /login username=USERNAME&password=PASSWORD  
-*----------------------------------------------*
-Comment l'utiliser coté android:  
-&nbsp;&nbsp;&nbsp;&nbsp;request POST standard comme les précédentes  user: test_user, pass: test_pass
-&nbsp;&nbsp;&nbsp;&nbsp;récupérez le cookie renvoyé dans le header de la réponse à la requete post   
-&nbsp;&nbsp;&nbsp;&nbsp;envoyez ce cookie dans toutes les requetes futures  
-&nbsp;&nbsp;&nbsp;&nbsp;Pour faire tout ça vous pouvez regarder JavaNetCookieJar et modifier votre client okhttp pour l'incorporer.  
-*----------------------------------------------*
+POST /login username=USERNAME&password=PASSWORD  (test_user, test_pass)
 
 ## Not deployed
 
 Register new user  
 POST /register username=USERNAME&password=PASSWORD  
 
+## Standard response format  
+
+On success:  
+{  
+&nbsp;&nbsp;&nbsp;&nbsp;"result": "SUCCESS",  
+&nbsp;&nbsp;&nbsp;&nbsp;["optionnal content": "value"]  
+}  
+
+On failure:  
+{  
+&nbsp;&nbsp;&nbsp;&nbsp;"result": "FAILURE",  
+&nbsp;&nbsp;&nbsp;&nbsp;"error_message": "Relevant error message."  
+}  
 
 # TODO
 
