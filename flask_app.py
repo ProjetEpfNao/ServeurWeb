@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from command_manager import CommandManager
 from json_formatter import JsonFormatter
 from user_manager import UserManager
+from streamer import Streamer
 import rest_api
 import models.user
 import config
@@ -48,7 +49,7 @@ User = models.user.create_user_class(db)
 users = UserManager(db, User)
 server = CommandManager()
 json = JsonFormatter(indent=4)
-
+streamer = Streamer()
 
 def clean_app():
     server.purge()
@@ -93,3 +94,20 @@ def login():
         return resp
     return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_FAILURE,
                        rest_api.ERROR_KEY: rest_api.INCORRECT_CREDENTIALS_ERROR})
+
+def feed(streamer):
+    while True:
+        data = streamer.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        time.sleep(0.1)
+
+@app.route(rest_api.STREAM_EXT, methods=['GET', 'POST'])
+def stream():
+    if request.method == 'POST':
+        streamer.add_frame(request.data)
+        return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS})
+    if request.method == 'GET':
+        return Response(feed(streamer),
+                        mimetype='multipart/x-mixed-replace; boundary=frame')
+
