@@ -8,7 +8,7 @@ POST /add_command command=COMMAND (raise_arm || lower_arm || stand_up || sit_dow
 Get last command  
 GET /get_last_command  
 
-Login (not tested)  
+Login  
 POST /login username=USERNAME&password=PASSWORD  (test_user, test_pass)
 
 ## Not deployed
@@ -48,15 +48,16 @@ On failure:
 3. ~~Add sign-up request~~  
 4. ~~Add session check to command urls~~  
 5. ~~Add admin robot-user association~~  
-5.5 Add admin dashboard  
-6. Add robot credentials generator url  
+5.5 Add admin dashboard  PRIORITY
+6. Add robot credentials generator url  PRIORITY
 7. ~~Fuse the two managers into user_manager: 1 command queue per session~~  
 8. ~~Check if we need to rethink framework selection~~  
 9. Add salted hashes  
 10. Find HLS streaming module  
 11. Register certificate  
 12. Activate https  
-13. Add logout route   
-14. Migrate to heroku
+13. Add logout route   PRIORITY  
+14. Migrate to heroku  
 15. Remove test interdependence
 16. Add documentation
+17. Test Register PRIORITY  
