@@ -1,0 +1,29 @@
+<!doctype html>
+<title>Dashboard</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <nav>
+  <ul class="outer">
+    <li class="title">Dashboard</li>
+    <li class="right">
+    <ul>
+  {% if not session.logged_in %}
+    <li><a href="{{ url_for('login_page') }}">log in</a></li>
+    <li><a href="{{ url_for('register_page') }}">register</a></li>
+  {% else %}
+    <li><a href="{{ url_for('logout_page') }}">log out</a></li>
+  {% endif %}
+    </ul>
+    </li>
+  </ul>
+  </nav>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+
+  <section class="main">
+    <section class="content">
+      {% block body %}{% endblock %}
+    </section>
+  </section>
+</div>

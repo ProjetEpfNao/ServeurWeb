@@ -1,9 +1,11 @@
 # A very simple Flask Hello World app for you to get started with...
 
 from flask import Flask
+from flask import flash
 from flask import request
 from flask import session
 from flask import make_response
+from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from command_manager import CommandManager
 from json_formatter import JsonFormatter
@@ -63,7 +65,17 @@ streamer = Streamer()
 
 @app.route('/')
 def hello_world():
+    flash("test flash message")
+    return render_template("layout.html")
     return "Welcome."
+
+@app.route('/login_page')
+def login_page():
+    return render_template("login.html")
+
+@app.route('/register_page')
+def register_page():
+    return render_template("register.html")
 
 
 @app.route(rest_api.ADD_COMMAND_EXT, methods=['POST'])

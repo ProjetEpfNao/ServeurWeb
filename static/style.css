@@ -1,0 +1,100 @@
+form {
+    padding-left: 20px;
+    width: 700px;
+}
+
+label {
+    width: 70px;
+}
+
+
+
+form dl dt {
+    display: inline-block;
+}
+
+
+body {
+    font-family: roboto;
+    line-height: 1.42857143;
+    color: rgba(255,255,255,.7);
+    background-color: #222c32;
+}
+section {
+    display: block;
+}
+
+section.content {
+    padding-left: 50px;
+    padding-right: 15px;
+}
+
+section.main {
+    padding-bottom: 110px;
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.card {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    position: relative;
+    background: #2b343a;
+    margin-bottom: 30px;
+}
+
+nav {
+    background-color: #1E262B;
+    min-height: 70px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+    position: fixed;
+    z-index: 11;
+    width: 100%;
+    left: 0;
+    top: 0;
+    padding: 0 20px;
+}
+
+nav ul.outer {
+    list-style: none;
+    padding: 17px 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    position: relative;
+}
+
+
+ul li.title {
+    font-family: roboto;
+    line-height: 1.42857143;
+    color: rgba(255,255,255,.7);
+    float: left;
+    font-size: 30px;
+}
+
+ul li.right {
+    float: right;
+    font-family: roboto;
+    line-height: 1.42857143;
+    color: rgba(255,255,255,.7);
+    font-size: 20px;
+    margin-right: 50px;
+}
+
+li.right ul li {
+    display: inline-block;
+    margin: 0 1px;
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+li.right ul li:hover {
+    background-color: #272f33;
+}
+
+li.right ul li a {
+    color: rgba(255,255,255,.7);
+}
