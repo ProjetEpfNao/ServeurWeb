@@ -23,3 +23,7 @@ STREAM_EXT = "/stream"
 # ERRORS
 NO_SUCH_COMMAND_ERROR = "No such command."
 INCORRECT_CREDENTIALS_ERROR = "Incorrect credentials."
+
+# HTTP CODES
+UNAUTH_RESPONSE = "401 Unauthorized"
+FORBID_RESPONSE = "403 Forbidden"

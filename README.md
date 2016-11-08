@@ -43,17 +43,20 @@ On failure:
 ## Sprint 2
 
 
-1. ~~Add db~~
-2. ~~Add authentication request~~
-3. ~~Add sign-up request~~
-4. Add session check to command urls
-5. Add admin robot-user association dashboard
-6. Add robot credentials generator url
-7. Fuse the two managers into user_manager: 1 command queue per session
-8. Check if we need to rethink framework selection
-9. Add salted hashes, drop users
-10. Find HLS streaming module
-11. Register certificate
-12. Activate https
-13. Hash passwords
-14. Add logout route 
+1. ~~Add db~~  
+2. ~~Add authentication request~~  
+3. ~~Add sign-up request~~  
+4. ~~Add session check to command urls~~  
+5. ~~Add admin robot-user association~~  
+5.5 Add admin dashboard  
+6. Add robot credentials generator url  
+7. ~~Fuse the two managers into user_manager: 1 command queue per session~~  
+8. ~~Check if we need to rethink framework selection~~  
+9. Add salted hashes  
+10. Find HLS streaming module  
+11. Register certificate  
+12. Activate https  
+13. Add logout route   
+14. Migrate to heroku
+15. Remove test interdependence
+16. Add documentation

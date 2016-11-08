@@ -16,7 +16,7 @@ import os
 import sys
 import uuid
 
-# DETERMINE ENV
+# CHECK ENV
 if 'FLASK_ENV' not in os.environ:
     raise ValueError('FLASK_ENV variable not set. Set to DEV or TEST.')
 
@@ -27,6 +27,8 @@ elif env == 'TEST':
     import config.test as config
 else:
     raise ValueError('Wrong FLASK_ENV value. Set to DEV or TEST.')
+
+AUTH_ON = False
 
 # START APP
 app = Flask(__name__)
@@ -42,35 +44,70 @@ app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
 app.config['SECRET_KEY'] = config.secret_key
 db = SQLAlchemy(app)
 
+
+def fill_db():
+    with app.open_resource('static/seeds.sql', mode='r') as f:
+        sql = f.read()
+    for statement in sql.split(";")[:-1]:
+        db.session.execute(statement)
+    db.session.commit()
+
 # INIT MODELS
 User = models.user.create_user_class(db)
 
 # SERVER START
 users = UserManager(db, User)
-server = CommandManager()
 json = JsonFormatter(indent=4)
 streamer = Streamer()
-
-def clean_app():
-    server.purge()
-app.clean = clean_app
 
 
 @app.route('/')
 def hello_world():
-    return str(server.command_queue)
+    return "Welcome."
 
 
 @app.route(rest_api.ADD_COMMAND_EXT, methods=['POST'])
 def append_command():
+    # Get user
+    user = users.get_user_by_session(session)
+    if not user:
+        return rest_api.UNAUTH_RESPONSE, 401
+    if user.is_robot:
+        return rest_api.FORBID_RESPONSE, 403
+
+    # Try to append command
     command = request.form[rest_api.COMMAND_KEY]
-    result = server.append_command(command)
+    command_added = user.append_command(command)
+
+    # Format response
+    if command_added:
+        result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS}
+    else:
+        result = {rest_api.STATUS_KEY: rest_api.STATUS_FAILURE,
+                  rest_api.ERROR_KEY: rest_api.NO_SUCH_COMMAND_ERROR}
     return json.dumps(result)
 
 
 @app.route(rest_api.GET_LAST_COMMAND_EXT, methods=['GET'])
 def get_command():
-    result = server.pop_command()
+    # Get user and make sure it's a robot
+    robot = users.get_user_by_session(session)
+    if not robot:
+        return rest_api.UNAUTH_RESPONSE, 401
+    if not robot.is_robot:
+        return rest_api.FORBID_RESPONSE, 403
+
+    # Get his human's command
+    human = users.get_human(robot)
+    command = human.pop_command()
+
+    # Format response
+    if command:
+        result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS,
+                  rest_api.COMMAND_KEY: command}
+    else:
+        result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS,
+                  rest_api.COMMAND_KEY: ""}
     return json.dumps(result)
 
 
@@ -81,19 +118,30 @@ def register():
     return json.dumps(result)
 
 
+@app.route("/check_login")
+def check_login():
+    user = users.get_user_by_session(session)
+    if user:
+        return "You're logged in as " + str(user) + "."
+    else:
+        return "You're not logged in."
+
+
 @app.route(rest_api.LOGIN_EXT, methods=['POST'])
 def login():
     username = request.form[rest_api.USERNAME_KEY]
     password = request.form[rest_api.PASSWORD_KEY]
-    result = users.get_user(username, password)
-    if result:
-        resp = make_response(json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS}))
+    user = users.get_user(username, password)
+    if user:
+        resp = make_response(json.dumps(
+            {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS}))
         session_id = str(uuid.uuid4())
-        users.set_user_session(username, session_id)
+        users.set_user_session(user, session_id)
         session[rest_api.COOKIE_KEY] = session_id
         return resp
     return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_FAILURE,
                        rest_api.ERROR_KEY: rest_api.INCORRECT_CREDENTIALS_ERROR})
+
 
 def feed(streamer):
     while True:
@@ -101,6 +149,7 @@ def feed(streamer):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
         time.sleep(0.1)
+
 
 @app.route(rest_api.STREAM_EXT, methods=['GET', 'POST'])
 def stream():
@@ -110,4 +159,3 @@ def stream():
     if request.method == 'GET':
         return Response(feed(streamer),
                         mimetype='multipart/x-mixed-replace; boundary=frame')
-
