@@ -79,11 +79,13 @@ def login_page():
         login()
         return redirect(url_for("user_page"))
 
+
 @app.route('/user_page')
 def user_page():
     user = users.get_user_by_session(session)
     robot = users.get_robot(user)
     return render_template("user.html", users=users, robot=robot)
+
 
 @app.route('/logout_page', methods=['GET', 'POST'])
 def logout_page():
@@ -128,6 +130,9 @@ def get_command():
 
     # Get his human's command
     human = users.get_human(robot)
+    if not human:
+        return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_FAILURE,
+                           rest_api.ERROR_KEY: rest_api.NO_OWNER})
     command = human.pop_command()
 
     # Format response
@@ -144,7 +149,7 @@ def get_command():
 def register():
     result = users.add_user(request.form[rest_api.USERNAME_KEY],
                             request.form[rest_api.PASSWORD_KEY],
-                            request.form[rest_api.ROBOT_KEY])
+                            request.form[rest_api.ROBOT_KEY] == 'True')
     return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS})
 
 

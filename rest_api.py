@@ -16,6 +16,7 @@ LOGIN_EXT = "/login"
 COOKIE_KEY = "session-id"
 USERNAME_KEY = "username"
 PASSWORD_KEY = "password"
+ROBOT_KEY = "is_robot"
 
 # STREAM
 STREAM_EXT = "/stream"
@@ -23,6 +24,7 @@ STREAM_EXT = "/stream"
 # ERRORS
 NO_SUCH_COMMAND_ERROR = "No such command."
 INCORRECT_CREDENTIALS_ERROR = "Incorrect credentials."
+NO_OWNER = "This robot has no owner."
 
 # HTTP CODES
 UNAUTH_RESPONSE = "401 Unauthorized"
