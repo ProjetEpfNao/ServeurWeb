@@ -5,11 +5,19 @@
 
   <div class="card">
     {% if robot %}
-    robot.username
+    {{ robot.username }}
     <br>
-    robot.id
+    {{ robot.id }}
     {% else %}
-    No robot available.
+    You don't own a robot.
+    <form action="{{ url_for('associate_page') }}" method=post>
+      <select name="robot_select">
+      {% for robot in users.get_free_robots() %}
+      <option value={{ robot.username }}>{{ robot.username }}</option>
+      {% endfor %}
+      </select>
+      <input class ="button" type=submit value="Associate Robot">
+    </form>
     {% endif %}
   </div>
 {% endblock %}

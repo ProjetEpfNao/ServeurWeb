@@ -80,21 +80,35 @@ def login_page():
         return redirect(url_for("user_page"))
 
 
+@app.route('/register_page', methods=['GET', 'POST'])
+def register_page():
+    if request.method == 'GET':
+        return render_template("register.html", users=users)
+    if request.method == 'POST':
+        register()
+        login()
+        return redirect(url_for("user_page"))
+
+
 @app.route('/user_page')
 def user_page():
     user = users.get_user_by_session(session)
+    if not user:
+        return "404 page not found.", 404
     robot = users.get_robot(user)
     return render_template("user.html", users=users, robot=robot)
 
+@app.route('/associate_page', methods=['POST'])
+def associate_page():
+    robot_name = request.form.get('robot_select')
+    robot = users.get_robot_by_username(robot_name)
+    user = users.get_user_by_session(session)
+    users.add_robot_to_user(user, robot)
+    return redirect(url_for("user_page"))
 
 @app.route('/logout_page', methods=['GET', 'POST'])
 def logout_page():
     return render_template("logout.html", users=users)
-
-
-@app.route('/register_page', methods=['GET', 'POST'])
-def register_page():
-    return render_template("register.html", users=users)
 
 
 @app.route(rest_api.ADD_COMMAND_EXT, methods=['POST'])
