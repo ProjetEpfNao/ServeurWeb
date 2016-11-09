@@ -59,7 +59,15 @@ class UserManager(object):
         else:
             return user.robot
 
+    def remove_previous_session(self, user):
+        for sess in self.sessions:
+            previous = self.sessions[sess]
+            if previous.id == user.id:
+                self.sessions.pop(sess)
+                break
+
     def set_user_session(self, user, session_id):
+        self.remove_previous_session(user)
         self.sessions[session_id] = user
 
     def get_user_by_session(self, session):
