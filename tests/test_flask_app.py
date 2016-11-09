@@ -32,6 +32,9 @@ class TestFlaskApp(unittest.TestCase):
         return self.app.post(rest_api.LOGIN_EXT,
                              data=dict(username=TEST_ROBOT, password=TEST_ROBOT_PASSWORD))
 
+    def setUpClass():
+        flask_app.db.drop_all()
+
     def setUp(self):
         self.db_fd, flask_app.app.config['DATABASE'] = tempfile.mkstemp()
         flask_app.app.config['TESTING'] = True

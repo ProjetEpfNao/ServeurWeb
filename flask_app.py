@@ -6,6 +6,8 @@ from flask import request
 from flask import session
 from flask import make_response
 from flask import render_template
+from flask import redirect
+from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
 from command_manager import CommandManager
 from json_formatter import JsonFormatter
@@ -66,16 +68,31 @@ streamer = Streamer()
 @app.route('/')
 def hello_world():
     flash("test flash message")
-    return render_template("layout.html")
-    return "Welcome."
+    return render_template("layout.html", users=users)
 
-@app.route('/login_page')
+
+@app.route('/login_page', methods=['GET', 'POST'])
 def login_page():
-    return render_template("login.html")
+    if request.method == 'GET':
+        return render_template("login.html", users=users)
+    if request.method == 'POST':
+        login()
+        return redirect(url_for("user_page"))
 
-@app.route('/register_page')
+@app.route('/user_page')
+def user_page():
+    user = users.get_user_by_session(session)
+    robot = users.get_robot(user)
+    return render_template("user.html", users=users, robot=robot)
+
+@app.route('/logout_page', methods=['GET', 'POST'])
+def logout_page():
+    return render_template("logout.html", users=users)
+
+
+@app.route('/register_page', methods=['GET', 'POST'])
 def register_page():
-    return render_template("register.html")
+    return render_template("register.html", users=users)
 
 
 @app.route(rest_api.ADD_COMMAND_EXT, methods=['POST'])
@@ -126,8 +143,9 @@ def get_command():
 @app.route(rest_api.REGISTER_EXT, methods=['POST'])
 def register():
     result = users.add_user(request.form[rest_api.USERNAME_KEY],
-                            request.form[rest_api.PASSWORD_KEY])
-    return json.dumps(result)
+                            request.form[rest_api.PASSWORD_KEY],
+                            request.form[rest_api.ROBOT_KEY])
+    return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS})
 
 
 @app.route("/check_login")

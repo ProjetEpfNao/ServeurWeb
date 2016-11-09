@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>My Robot</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+
+  <div class="card">
+    {% if robot %}
+    robot.username
+    <br>
+    robot.id
+    {% else %}
+    No robot available.
+    {% endif %}
+  </div>
+{% endblock %}

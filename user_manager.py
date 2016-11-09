@@ -8,11 +8,11 @@ class UserManager(object):
         self.User = User
         self.sessions = {}
 
-    def add_user(self, username, password):
-        user = self.User(username=username, password=password)
+    def add_user(self, username, password, is_robot=False):
+        user = self.User(username=username,
+                         password=password, is_robot=is_robot)
         self.db.session.add(user)
         self.db.session.commit()
-        return {'result': 'SUCCESS'}
 
     def get_user(self, username, password):
         return self.User.query.filter_by(username=username, password=password).first()

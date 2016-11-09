@@ -7,10 +7,11 @@
     <li class="title">Dashboard</li>
     <li class="right">
     <ul>
-  {% if not session.logged_in %}
+  {% if not users.get_user_by_session(session) %}
     <li><a href="{{ url_for('login_page') }}">log in</a></li>
     <li><a href="{{ url_for('register_page') }}">register</a></li>
   {% else %}
+    <li>{{ users.get_user_by_session(session).username }}</li>
     <li><a href="{{ url_for('logout_page') }}">log out</a></li>
   {% endif %}
     </ul>
