@@ -1,0 +1,3 @@
+flask
+flask_sqlalchemy
+https://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.1.3.tar.gz

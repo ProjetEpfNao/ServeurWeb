@@ -48,8 +48,7 @@ On failure:
 3. ~~Add sign-up request~~  
 4. ~~Add session check to command urls~~  
 5. ~~Add admin robot-user association~~  
-5.5 Add admin dashboard  PRIORITY
-6. Add robot credentials generator url  PRIORITY
+5.5 ~~Add admin dashboard~~  
 7. ~~Fuse the two managers into user_manager: 1 command queue per session~~  
 8. ~~Check if we need to rethink framework selection~~  
 9. Add salted hashes  

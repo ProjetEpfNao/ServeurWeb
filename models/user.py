@@ -21,7 +21,10 @@ def create_user_class(db):
                    "lower_arm",
                    "stand_up",
                    "sit_down",
-                   "look_up"]
+                   "look_up",
+                   "look_down",
+                   "look_left",
+                   "look_right"]
 
         @orm.reconstructor
         def init_on_load(self):
