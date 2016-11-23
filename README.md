@@ -51,11 +51,16 @@ On failure:
 5.5 ~~Add admin dashboard~~  
 7. ~~Fuse the two managers into user_manager: 1 command queue per session~~  
 8. ~~Check if we need to rethink framework selection~~  
+9. Add logout route   PRIORITY  
+10. ~~Find HLS streaming module~~  
+11. ~~Add batery command~~   
+12. Add get stream url robot command
+
+## Won't be done:
+
 9. Add salted hashes  
-10. Find HLS streaming module  
 11. Register certificate  
 12. Activate https  
-13. Add logout route   PRIORITY  
 14. Migrate to heroku  
 15. Remove test interdependence
 16. Add documentation

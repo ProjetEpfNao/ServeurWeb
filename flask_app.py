@@ -98,6 +98,7 @@ def user_page():
     robot = users.get_robot(user)
     return render_template("user.html", users=users, robot=robot)
 
+
 @app.route('/associate_page', methods=['POST'])
 def associate_page():
     robot_name = request.form.get('robot_select')
@@ -105,6 +106,7 @@ def associate_page():
     user = users.get_user_by_session(session)
     users.add_robot_to_user(user, robot)
     return redirect(url_for("user_page"))
+
 
 @app.route('/logout_page', methods=['GET', 'POST'])
 def logout_page():
@@ -122,14 +124,24 @@ def append_command():
 
     # Try to append command
     command = request.form[rest_api.COMMAND_KEY]
+
+    result = {}
+    if command == rest_api.BATTERY_KEY:  # Ugly but whatever
+        robot = user.robot
+        if robot != None:
+            battery = robot.battery
+        else:
+            battery = 0
+        result[rest_api.BATTERY_KEY] = battery
+
     command_added = user.append_command(command)
 
     # Format response
     if command_added:
-        result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS}
+        result[rest_api.STATUS_KEY] = rest_api.STATUS_SUCCESS
     else:
-        result = {rest_api.STATUS_KEY: rest_api.STATUS_FAILURE,
-                  rest_api.ERROR_KEY: rest_api.NO_SUCH_COMMAND_ERROR}
+        result[rest_api.STATUS_KEY] = rest_api.STATUS_FAILURE
+        result[rest_api.ERROR_KEY] = rest_api.NO_SUCH_COMMAND_ERROR
     return json.dumps(result)
 
 
@@ -157,6 +169,19 @@ def get_command():
         result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS,
                   rest_api.COMMAND_KEY: ""}
     return json.dumps(result)
+
+
+@app.route(rest_api.UPDATE_BATTERY_INFO, methods=['POST'])
+def update_battery_info():
+    # Get user and make sure it's a robot
+    robot = users.get_user_by_session(session)
+    if not robot:
+        return rest_api.UNAUTH_RESPONSE, 401
+    if not robot.is_robot:
+        return rest_api.FORBID_RESPONSE, 403
+
+    robot.battery = int(request.form[rest_api.BATTERY_KEY])
+    return json.dumps({rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS})
 
 
 @app.route(rest_api.REGISTER_EXT, methods=['POST'])

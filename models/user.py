@@ -24,11 +24,13 @@ def create_user_class(db):
                    "look_up",
                    "look_down",
                    "look_left",
-                   "look_right"]
+                   "look_right",
+                   "battery"]
 
         @orm.reconstructor
         def init_on_load(self):
             self.command_queue = []
+            self.battery = 0.
 
         def append_command(self, command):
             if command not in self.ALLOWED:

@@ -9,6 +9,8 @@ ERROR_KEY = "error_message"
 COMMAND_KEY = "command"
 ADD_COMMAND_EXT = "/add_command"
 GET_LAST_COMMAND_EXT = "/get_last_command"
+UPDATE_BATTERY_INFO = "/update_battery_info"
+BATTERY_KEY = "battery"
 
 # ACCOUNT CONTENT
 REGISTER_EXT = "/register"
@@ -18,7 +20,7 @@ USERNAME_KEY = "username"
 PASSWORD_KEY = "password"
 ROBOT_KEY = "is_robot"
 
-# STREAM
+# STREAM (deprecated)
 STREAM_EXT = "/stream"
 
 # ERRORS
