@@ -25,7 +25,10 @@ def create_user_class(db):
                    "look_down",
                    "look_left",
                    "look_right",
-                   "battery"]
+                   "battery",
+                   "speak",
+                   "volume_up",
+                   "volume_down"]
 
         @orm.reconstructor
         def init_on_load(self):
