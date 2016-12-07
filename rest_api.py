@@ -7,6 +7,7 @@ ERROR_KEY = "error_message"
 
 # COMMAND CONTENT
 COMMAND_KEY = "command"
+CONTENT_KEY = "content"
 ADD_COMMAND_EXT = "/add_command"
 GET_LAST_COMMAND_EXT = "/get_last_command"
 UPDATE_BATTERY_INFO = "/update_battery_info"

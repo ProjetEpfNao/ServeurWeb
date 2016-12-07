@@ -13,6 +13,7 @@ from command_manager import CommandManager
 from json_formatter import JsonFormatter
 from user_manager import UserManager
 from streamer import Streamer
+from command import Command
 import rest_api
 import models.user
 import config
@@ -112,7 +113,6 @@ def associate_page():
 def logout_page():
     return render_template("logout.html", users=users)
 
-
 @app.route(rest_api.ADD_COMMAND_EXT, methods=['POST'])
 def append_command():
     # Get user
@@ -124,6 +124,9 @@ def append_command():
 
     # Try to append command
     command = request.form[rest_api.COMMAND_KEY]
+    content = None
+    if rest_api.CONTENT_KEY in request.form:
+        content = request.form[rest_api.CONTENT_KEY]
 
     result = {}
     if command == rest_api.BATTERY_KEY:  # Ugly but whatever
@@ -134,7 +137,7 @@ def append_command():
             battery = 0
         result[rest_api.BATTERY_KEY] = battery
 
-    command_added = user.append_command(command)
+    command_added = user.append_command(Command(command, content))
 
     # Format response
     if command_added:
@@ -164,7 +167,10 @@ def get_command():
     # Format response
     if command:
         result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS,
-                  rest_api.COMMAND_KEY: command}
+                  rest_api.COMMAND_KEY: command.name}
+        if command.content:
+            result[rest_api.CONTENT_KEY] = command.content
+
     else:
         result = {rest_api.STATUS_KEY: rest_api.STATUS_SUCCESS,
                   rest_api.COMMAND_KEY: ""}

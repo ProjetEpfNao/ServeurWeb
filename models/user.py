@@ -36,7 +36,7 @@ def create_user_class(db):
             self.battery = 0.
 
         def append_command(self, command):
-            if command not in self.ALLOWED:
+            if command.name not in self.ALLOWED:
                 return False
             self.command_queue.append(command)
             return True

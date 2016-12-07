@@ -11,8 +11,6 @@ GET /get_last_command
 Login  
 POST /login username=USERNAME&password=PASSWORD  (test_user, test_pass)
 
-## Not deployed
-
 Register new user  
 POST /register username=USERNAME&password=PASSWORD  
 
